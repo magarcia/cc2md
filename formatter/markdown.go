@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/magarcia/ccsession-viewer/parser"
+	"github.com/magarcia/cc2md/parser"
 )
 
 type FormatOptions struct {

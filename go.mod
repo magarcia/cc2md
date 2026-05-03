@@ -1,4 +1,4 @@
-module github.com/magarcia/ccsession-viewer
+module github.com/magarcia/cc2md
 
 go 1.25.0
 
