@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/magarcia/ccsession-viewer/discovery"
+	"github.com/magarcia/cc2md/discovery"
 )
 
 func captureStdout(t *testing.T, fn func()) string {

@@ -14,7 +14,7 @@ func TestDecodeProjectName(t *testing.T) {
 		want  string
 	}{
 		{"-Users-name-project", "/Users/name/project"},
-		{"-Users-magarcia-dev-ccsession-viewer", "/Users/magarcia/dev/ccsession/viewer"},
+		{"-Users-magarcia-dev-cc2md", "/Users/magarcia/dev/ccsession/viewer"},
 		{"normal-name", "normal-name"},
 		{"singleword", "singleword"},
 	}
