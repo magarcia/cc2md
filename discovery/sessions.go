@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/magarcia/ccsession-viewer/internal"
+	"github.com/magarcia/cc2md/internal"
 )
 
 // SessionEntry represents a single Claude Code session log file.

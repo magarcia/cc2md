@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/magarcia/ccsession-viewer/internal"
-	"github.com/magarcia/ccsession-viewer/parser"
+	"github.com/magarcia/cc2md/internal"
+	"github.com/magarcia/cc2md/parser"
 )
 
 type ToolFormatOptions struct {

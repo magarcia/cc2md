@@ -1,6 +1,6 @@
-module github.com/magarcia/ccsession-viewer
+module github.com/magarcia/cc2md
 
-go 1.25.0
+go 1.24.2
 
 require (
 	github.com/charmbracelet/bubbles v1.0.0

@@ -8,7 +8,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/magarcia/ccsession-viewer/discovery"
+	"github.com/magarcia/cc2md/discovery"
 )
 
 func makeEntry(name, project, path string) discovery.SessionEntry {
