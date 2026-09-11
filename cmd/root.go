@@ -28,6 +28,7 @@ var (
 	widthFlag    int
 	thinkingFlag bool
 	collapseFlag bool
+	expandFlag   bool
 	maxLinesFlag int
 	rawFlag      bool
 	markdownFlag string
@@ -70,6 +71,11 @@ func init() {
 	rootCmd.Flags().IntVarP(&widthFlag, "width", "w", 0, "Word wrap width (default: terminal width)")
 	rootCmd.Flags().BoolVarP(&thinkingFlag, "thinking", "t", false, "Include thinking blocks")
 	rootCmd.Flags().BoolVarP(&collapseFlag, "collapse", "c", true, "Collapse tool calls and thinking into <details> tags")
+
+	// As `-c` is default and `-c=0` is verbose and not obvious, switch to the non-default opposite, `-x`
+	rootCmd.Flags().BoolVarP(&expandFlag, "expand", "x", false, "Expand tool calls and thinking, rather than collapse with <details>")
+	_ = rootCmd.Flags().MarkHidden("collapse")
+
 	rootCmd.Flags().IntVar(&maxLinesFlag, "max-lines", 100, "Max lines per tool output before truncation")
 	rootCmd.Flags().BoolVar(&rawFlag, "raw", false, "Output raw markdown (skip glamour rendering)")
 	rootCmd.Flags().StringVarP(&markdownFlag, "markdown", "m", "", "Markdown flavor: gfm, commonmark")
@@ -143,6 +149,11 @@ func renderSession(filePath string, cmd *cobra.Command) error {
 	lines, err := parser.ReadSessionFile(filePath)
 	if err != nil {
 		return fmt.Errorf("reading session: %w", err)
+	}
+
+	if expandFlag {
+		// If expand is specified, then set collapse to false, as collapse defaults to 'true'.
+		collapseFlag = false
 	}
 
 	meta := parser.ExtractMetadata(lines)
