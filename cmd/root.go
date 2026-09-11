@@ -10,6 +10,7 @@ import (
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
+
 	"golang.org/x/term"
 
 	"github.com/magarcia/ccsession-viewer/discovery"
@@ -59,7 +60,13 @@ var rootCmd = &cobra.Command{
   cc2md list --json
 
   # Filter sessions by project
-  cc2md list myproject`,
+  cc2md list myproject
+
+Configuration in ~/.config/cc2md/cc2md.yaml is supported, as well as environment
+variables matching the flag names prefixed with CC2MD_, eg. CC2MD_THINKING=true
+`,
+
+	PersistentPreRunE: initializeConfig,
 }
 
 func init() {
