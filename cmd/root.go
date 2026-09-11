@@ -148,12 +148,14 @@ func renderSession(filePath string, cmd *cobra.Command) error {
 	meta := parser.ExtractMetadata(lines)
 	turns := parser.BuildTurns(lines)
 	flavor := determineFlavor(cmd)
+	interactive := isStdoutTTY()
 
 	md := formatter.FormatSession(meta, turns, formatter.FormatOptions{
-		IncludeThinking: thinkingFlag,
-		Collapse:        collapseFlag,
-		MaxLines:        maxLinesFlag,
-		Flavor:          flavor,
+		CleanControlChars: !interactive,
+		IncludeThinking:   thinkingFlag,
+		Collapse:          collapseFlag,
+		MaxLines:          maxLinesFlag,
+		Flavor:            flavor,
 	})
 
 	if outputFlag != "" {
