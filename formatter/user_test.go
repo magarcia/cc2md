@@ -205,3 +205,19 @@ func TestFormatLocalCommand_WithTimestamp(t *testing.T) {
 		t.Errorf("got:\n%s\nwant:\n%s", got, want)
 	}
 }
+
+func TestFormatUserTurn_StripIDEContext(t *testing.T) {
+	input := "<ide_opened_file>The user opened foo.go</ide_opened_file>\n<browser_instruction># Chrome\nlots of text</browser_instruction>\nactual message<ide_selection>x := 1</ide_selection>"
+	got := FormatUserTurn([]string{input}, "", FlavorGFM)
+	want := "> [!NOTE]\n> **User**\n>\n> actual message"
+	if got != want {
+		t.Errorf("got:\n%s\nwant:\n%s", got, want)
+	}
+}
+
+func TestFormatUserTurn_OnlyIDEContext(t *testing.T) {
+	got := FormatUserTurn([]string{"<ide_opened_file>The user opened foo.go</ide_opened_file>"}, "", FlavorGFM)
+	if got != "" {
+		t.Errorf("expected empty turn, got:\n%s", got)
+	}
+}

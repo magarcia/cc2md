@@ -18,6 +18,8 @@ type JsonlLine struct {
 	Timestamp   string          `json:"timestamp"`
 	IsMeta      bool            `json:"isMeta,omitempty"`
 	Message     json.RawMessage `json:"message"`
+	AiTitle     string          `json:"aiTitle,omitempty"`
+	CustomTitle string          `json:"customTitle,omitempty"`
 }
 
 // UserMessage represents a user's message.
@@ -163,6 +165,9 @@ type SessionMetadata struct {
 	Model            string
 	WorkingDirectory string
 	Version          string
+	GitBranch        string
+	LastActivity     string // timestamp of the last line
+	Title            string // custom title if set, otherwise the latest AI-generated title
 }
 
 // ConversationTurn represents a processed conversation turn.

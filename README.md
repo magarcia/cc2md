@@ -154,6 +154,26 @@ git push
 
 Run this on a schedule (cron, launchd) to keep the archive growing automatically. Over time you get a complete record of how you work with AI — which patterns you return to, how your prompting evolves, and which approaches work across projects.
 
+## Syncing to Obsidian (or any notes folder)
+
+`cc2md sync` writes one note per session into a folder, named `<date> <time> <project> - <title>.md` (the title is the session's `/rename` name or its AI-generated title). Notes get YAML frontmatter (`title`, `date`, `project`, `session_id`, `model`, `tags`, …), include thinking blocks, fold tool calls into `<details>`, and leave out the context IDE extensions inject. Only sessions that changed since the last sync are rewritten, and a note is renamed when its session title changes. Notes are never deleted, so they outlive Claude Code's log cleanup.
+
+```bash
+# One-off export of all sessions
+cc2md sync --dir ~/Obsidian/MyVault/Claude\ Code
+```
+
+To keep the folder current automatically, add hooks to `~/.claude/settings.json`. `--hook` reads the session from the hook input on stdin:
+
+```json
+{
+  "hooks": {
+    "Stop": [{ "hooks": [{ "type": "command", "command": "cc2md sync --hook --dir ~/Obsidian/MyVault/Claude\\ Code 2>/dev/null || true", "async": true }] }],
+    "SessionEnd": [{ "hooks": [{ "type": "command", "command": "cc2md sync --hook --dir ~/Obsidian/MyVault/Claude\\ Code 2>/dev/null || true" }] }]
+  }
+}
+```
+
 ## Building from Source
 
 Requires Go 1.25+ and [just](https://github.com/casey/just).
