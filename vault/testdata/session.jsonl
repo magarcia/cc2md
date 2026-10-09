@@ -1,0 +1,3 @@
+{"type":"user","sessionId":"11111111-2222-3333-4444-555555555555","cwd":"/home/u/my-proj","version":"2.1.0","gitBranch":"main","uuid":"u1","timestamp":"2026-10-09T09:57:00.000Z","message":{"role":"user","content":[{"type":"text","text":"<ide_opened_file>The user opened x.go</ide_opened_file>"},{"type":"text","text":"Please fix the bug"}]}}
+{"type":"assistant","sessionId":"11111111-2222-3333-4444-555555555555","uuid":"a1","timestamp":"2026-10-09T09:57:05.000Z","message":{"role":"assistant","model":"claude-opus-5-5","content":[{"type":"thinking","thinking":"Let me look"},{"type":"text","text":"Fixed it."}]}}
+{"type":"ai-title","aiTitle":"Fix bug: in x.go","sessionId":"11111111-2222-3333-4444-555555555555"}

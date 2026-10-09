@@ -15,20 +15,12 @@ var (
 	reLocalCmdStdout   = regexp.MustCompile(`(?s)<local-command-stdout>(.*?)</local-command-stdout>`)
 	reLocalCmdStderr   = regexp.MustCompile(`(?s)<local-command-stderr>(.*?)</local-command-stderr>`)
 	reDashLine         = regexp.MustCompile(`(?m)^-{3,}$`)
+	// Context injected by IDE extensions (VS Code, JetBrains) and Claude in Chrome.
+	reIDEContext = regexp.MustCompile(`(?s)<(ide_opened_file|ide_selection|ide_diagnostics|browser_instruction)>.*?</(?:ide_opened_file|ide_selection|ide_diagnostics|browser_instruction)>\s*`)
 )
 
 func FormatUserTurn(texts []string, timestamp string, flavor MarkdownFlavor) string {
-	combined := strings.Join(texts, "\n")
-
-	cleaned := reSystemReminder.ReplaceAllString(combined, "")
-	cleaned = reCommandName.ReplaceAllString(cleaned, "")
-	cleaned = reCommandMessage.ReplaceAllString(cleaned, "")
-	cleaned = reCommandArgsOpen.ReplaceAllString(cleaned, "")
-	cleaned = reCommandArgsClose.ReplaceAllString(cleaned, "")
-	cleaned = reLocalCmdCaveat.ReplaceAllString(cleaned, "")
-	cleaned = reLocalCmdStdout.ReplaceAllString(cleaned, "$1")
-	cleaned = reLocalCmdStderr.ReplaceAllString(cleaned, "$1")
-	cleaned = strings.TrimSpace(cleaned)
+	cleaned := CleanUserText(strings.Join(texts, "\n"))
 
 	if cleaned == "" {
 		return ""
@@ -41,6 +33,20 @@ func FormatUserTurn(texts []string, timestamp string, flavor MarkdownFlavor) str
 		return "> **Note:** **User**" + tl + "\n>\n" + body
 	}
 	return "> [!NOTE]\n> **User**" + tl + "\n>\n" + body
+}
+
+// CleanUserText removes injected system, command and IDE context tags from a user message.
+func CleanUserText(text string) string {
+	cleaned := reSystemReminder.ReplaceAllString(text, "")
+	cleaned = reIDEContext.ReplaceAllString(cleaned, "")
+	cleaned = reCommandName.ReplaceAllString(cleaned, "")
+	cleaned = reCommandMessage.ReplaceAllString(cleaned, "")
+	cleaned = reCommandArgsOpen.ReplaceAllString(cleaned, "")
+	cleaned = reCommandArgsClose.ReplaceAllString(cleaned, "")
+	cleaned = reLocalCmdCaveat.ReplaceAllString(cleaned, "")
+	cleaned = reLocalCmdStdout.ReplaceAllString(cleaned, "$1")
+	cleaned = reLocalCmdStderr.ReplaceAllString(cleaned, "$1")
+	return strings.TrimSpace(cleaned)
 }
 
 func FormatTeammateMessage(name, content, timestamp string, flavor MarkdownFlavor) string {

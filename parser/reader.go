@@ -24,7 +24,7 @@ func ReadSessionFile(filePath string) ([]JsonlLine, error) {
 
 	var lines []JsonlLine
 	scanner := bufio.NewScanner(file)
-	scanner.Buffer(make([]byte, 0, 64*1024), 2*1024*1024)
+	scanner.Buffer(make([]byte, 0, 64*1024), 64*1024*1024)
 
 	for scanner.Scan() {
 		raw := strings.TrimSpace(scanner.Text())

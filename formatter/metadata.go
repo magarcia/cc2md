@@ -30,7 +30,12 @@ func FormatMetadata(meta parser.SessionMetadata, flavor MarkdownFlavor) string {
 > Plain quoted lines are **Claude** responses`
 	}
 
-	return fmt.Sprintf(`# Session
+	title := meta.Title
+	if title == "" {
+		title = "Session"
+	}
+
+	return fmt.Sprintf(`# %s
 
 %s
 
@@ -40,5 +45,5 @@ func FormatMetadata(meta parser.SessionMetadata, flavor MarkdownFlavor) string {
 | Model | %s |
 | Working Directory | %s |
 | Session | %s |
-| Claude Code | v%s |`, legend, date, meta.Model, meta.WorkingDirectory, meta.SessionID, meta.Version)
+| Claude Code | v%s |`, title, legend, date, meta.Model, meta.WorkingDirectory, meta.SessionID, meta.Version)
 }
