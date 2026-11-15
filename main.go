@@ -1,6 +1,6 @@
 package main
 
-import "github.com/magarcia/ccsession-viewer/cmd"
+import "github.com/magarcia/cc2md/cmd"
 
 var (
 	version = "dev"

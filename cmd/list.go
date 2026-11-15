@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/magarcia/ccsession-viewer/discovery"
+	"github.com/magarcia/cc2md/discovery"
 )
 
 type sessionJSON struct {
