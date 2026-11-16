@@ -7,7 +7,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/magarcia/ccsession-viewer/discovery"
+	"github.com/magarcia/cc2md/discovery"
 )
 
 type sessionItem struct {

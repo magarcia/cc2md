@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/magarcia/ccsession-viewer/parser"
+	"github.com/magarcia/cc2md/parser"
 )
 
 func strPtr(s string) *string { return &s }

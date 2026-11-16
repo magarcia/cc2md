@@ -12,11 +12,11 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"github.com/magarcia/ccsession-viewer/discovery"
-	"github.com/magarcia/ccsession-viewer/formatter"
-	"github.com/magarcia/ccsession-viewer/internal/pager"
-	"github.com/magarcia/ccsession-viewer/parser"
-	"github.com/magarcia/ccsession-viewer/tui"
+	"github.com/magarcia/cc2md/discovery"
+	"github.com/magarcia/cc2md/formatter"
+	"github.com/magarcia/cc2md/internal/pager"
+	"github.com/magarcia/cc2md/parser"
+	"github.com/magarcia/cc2md/tui"
 )
 
 var (
