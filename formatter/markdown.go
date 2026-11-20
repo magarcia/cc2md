@@ -13,10 +13,15 @@ type FormatOptions struct {
 	Collapse        bool
 	MaxLines        int
 	Flavor          MarkdownFlavor
+	Frontmatter     bool
 }
 
 func FormatSession(meta parser.SessionMetadata, turns []parser.ConversationTurn, opts FormatOptions) string {
 	sections := []string{FormatMetadata(meta, opts.Flavor)}
+	if opts.Frontmatter {
+		// Note apps show frontmatter as properties, so the legend and table are redundant.
+		sections = []string{FormatFrontmatter(meta), "# " + meta.Title}
+	}
 
 	for _, turn := range turns {
 		ts := formatTimestamp(turn.Timestamp)

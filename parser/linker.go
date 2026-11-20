@@ -26,6 +26,7 @@ var (
 // ExtractMetadata iterates lines and extracts session metadata.
 func ExtractMetadata(lines []JsonlLine) SessionMetadata {
 	meta := SessionMetadata{Model: "unknown"}
+	var customTitle, aiTitle string
 
 	for _, line := range lines {
 		if meta.SessionID == "" && line.SessionID != "" {
@@ -37,19 +38,39 @@ func ExtractMetadata(lines []JsonlLine) SessionMetadata {
 		if meta.Version == "" && line.Version != "" {
 			meta.Version = line.Version
 		}
-		if meta.Date == "" && line.Timestamp != "" {
-			meta.Date = line.Timestamp
+		if meta.GitBranch == "" && line.GitBranch != "" {
+			meta.GitBranch = line.GitBranch
+		}
+		if line.Timestamp != "" {
+			if meta.Date == "" {
+				meta.Date = line.Timestamp
+			}
+			meta.LastActivity = line.Timestamp
 		}
 
-		if line.Type == "assistant" {
-			var msg AssistantMessage
-			if err := json.Unmarshal(line.Message, &msg); err == nil && msg.Model != "" {
-				meta.Model = msg.Model
-				break
+		switch line.Type {
+		case "custom-title":
+			if line.CustomTitle != "" {
+				customTitle = line.CustomTitle
+			}
+		case "ai-title":
+			if line.AiTitle != "" {
+				aiTitle = line.AiTitle
+			}
+		case "assistant":
+			if meta.Model == "unknown" {
+				var msg AssistantMessage
+				if err := json.Unmarshal(line.Message, &msg); err == nil && msg.Model != "" && msg.Model != "<synthetic>" {
+					meta.Model = msg.Model
+				}
 			}
 		}
 	}
 
+	meta.Title = customTitle
+	if meta.Title == "" {
+		meta.Title = aiTitle
+	}
 	return meta
 }
 
